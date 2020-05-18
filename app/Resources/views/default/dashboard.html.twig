@@ -59,15 +59,37 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Detalle de requests</h3>
+                        <h3 class="box-title">Total de requests</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="chart">
-                                    <!-- Sales Chart Canvas -->
-                                    <canvas id="salesChart" style="height: 300px; width: 816px;" height="225" width="1020"></canvas>
+                                    <canvas id="totalRequestsChart" style="height: 300px; width: 816px;" height="225" width="1020"></canvas>
+                                </div>
+                                <!-- /.chart-responsive -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-footer -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Total de rechazos</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart">
+                                    <canvas id="rejectsChart" style="height: 300px; width: 816px;" height="225" width="1020"></canvas>
                                 </div>
                                 <!-- /.chart-responsive -->
                             </div>
@@ -82,6 +104,105 @@
     </section>
 
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        var ctxTotal = document.getElementById('totalRequestsChart').getContext('2d');
+        var ctxRejects = document.getElementById('rejectsChart').getContext('2d');
+
+        var totalRequestsChart = new Chart(ctxTotal, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Requests por minuto',
+                    data: [],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var rejectsChart = new Chart(ctxRejects, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Rechazos por minuto',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        function updateCharts(){
+
+            $.ajax({
+                url: '{{ url('metrics_get_api') }}',
+                data: null,
+                success: function (data) {
+                    console.log(data);
+                    updateTotalRequestChart(data.totals);
+                    updateRejectsChart(data.rejects);
+                },
+            });
+        }
+
+        function updateTotalRequestChart(metrics){
+            totalRequestsChart.data.labels = metrics.labels;
+            totalRequestsChart.data.datasets[0].data = metrics.values;
+            totalRequestsChart.update();
+        }
+
+        function updateRejectsChart(metrics){
+            rejectsChart.data.labels = metrics.labels;
+            rejectsChart.data.datasets[0].data = metrics.values;
+            rejectsChart.update();
+        }
+
+        $(document).ready(function () {
+            updateCharts();
+
+            setInterval(updateCharts, 3000);
+        });
+    </script>
 
 
 {% endblock %}

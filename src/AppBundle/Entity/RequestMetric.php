@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * RequestMetric
  *
@@ -160,6 +161,18 @@ class RequestMetric
      */
     public function setRejects($rejects) {
         $this->rejects = $rejects;
+    }
+
+    public function loadFromArray($item) {
+        $this->setId($item['ID']);
+        $this->setCreatedAt($item['CreatedAt']);
+        $this->setUpdatedAt($item['UpdatedAt']);
+        $this->setDeletedAt($item['CreatedAt']);
+        $this->setEventdate(\DateTime::createFromFormat(DATE_ISO8601, $item['Eventdate']));
+        $this->setSuccess($item['Success']);
+        $this->setRejects($item['Rejects']);
+
+        return $this;
     }
 
 }
