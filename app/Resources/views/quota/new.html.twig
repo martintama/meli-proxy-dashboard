@@ -1,0 +1,62 @@
+{% extends 'root.html.twig' %}
+
+{% set menu_quota = true %}
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Quotas
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{{ path('quota_index') }}">Quotas</a></li>
+            <li class="active">Agregar</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Info boxes -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Agregar quota</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    {{ form_start(form) }}
+                        <div class="box-body">
+                            <div class="form-group">
+                                {{ form_label(form.criteria) }}
+                                {{ form_errors(form.criteria) }}
+                                {{ form_widget(form.criteria, { 'attr': { 'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.key) }}
+                                {{ form_errors(form.key) }}
+                                {{ form_widget(form.key, { 'attr': { 'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.maxCount) }}
+                                {{ form_errors(form.maxCount) }}
+                                {{ form_widget(form.maxCount, { 'attr': { 'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.refillDelaySeconds) }}
+                                {{ form_errors(form.refillDelaySeconds) }}
+                                {{ form_widget(form.refillDelaySeconds, { 'attr': { 'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <a class="btn btn-default" href="{{ path('quota_index') }}">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

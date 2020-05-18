@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% set menu_quota = true %}
+{% block body %}
+    <h1>Quotum</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ quota.id }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ quota.createdAt }}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{{ quota.updatedAt }}</td>
+            </tr>
+            <tr>
+                <th>Deletedat</th>
+                <td>{{ quota.deletedAt }}</td>
+            </tr>
+            <tr>
+                <th>Criteria</th>
+                <td>{{ quota.criteria }}</td>
+            </tr>
+            <tr>
+                <th>Key</th>
+                <td>{{ quota.key }}</td>
+            </tr>
+            <tr>
+                <th>Remaining</th>
+                <td>{{ quota.remaining }}</td>
+            </tr>
+            <tr>
+                <th>Maxcount</th>
+                <td>{{ quota.maxCount }}</td>
+            </tr>
+            <tr>
+                <th>Lastdepletion</th>
+                <td>{{ quota.lastDepletion }}</td>
+            </tr>
+            <tr>
+                <th>Refilldelayseconds</th>
+                <td>{{ quota.refillDelaySeconds }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('quota_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('quota_edit', { 'id': quota.id }) }}">Edit</a>
+        </li>
+
+    </ul>
+{% endblock %}
