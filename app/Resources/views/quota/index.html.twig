@@ -19,7 +19,7 @@
     <!-- Info boxes -->
     <div class="row">
 
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Quotas habilitadas</h3>
@@ -37,10 +37,8 @@
                         <tr>
                             <th>Criterio</th>
                             <th>Clave</th>
-                            <th>Remanente</th>
-                            <th>Maximo</th>
-                            <th>Ultimo bloqueo</th>
-                            <th>Espera</th>
+                            <th>Requests máximos</th>
+                            <th>Espera (segundos)</th>
                             <th>Acciones</th>
                         </tr>
                         <tbody>
@@ -48,9 +46,7 @@
                             <tr>
                                 <td>{{ quota.criteria }}</td>
                                 <td>{{ quota.key }}</td>
-                                <td>{{ quota.remaining }}</td>
                                 <td>{{ quota.maxCount }}</td>
-                                <td>{{ quota.lastDepletion | date('Y-m-d H:i:s')}}</td>
                                 <td>{{ quota.refillDelaySeconds }}</td>
                                 <td>
                                     <a href="{{ path('quota_edit', { id: quota.id }) }}" class="btn btn-sm btn-primary">
