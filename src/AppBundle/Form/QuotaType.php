@@ -22,6 +22,7 @@ class QuotaType extends AbstractType
                 'choices'  => [
                     'IP Origen' => 'ip',
                     'Path' => 'path',
+                    'IP Origen y Path' => 'ip-path',
                     'Access token' => 'token',
                 ],
                 'placeholder' => '- Seleccione -'
